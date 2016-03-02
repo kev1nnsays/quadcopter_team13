@@ -1,0 +1,7 @@
+struct pose_t
+{
+    int64_t utime;
+
+    int8_t  num_channels;
+    float channels[num_channels];
+}

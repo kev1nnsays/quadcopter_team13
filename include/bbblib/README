@@ -1,0 +1,15 @@
+The bbblib subdirectory contains standalone utilities for handling BeagleBone hardware interfaces.
+It is similar to BlackLib but hopefully easier to read and use.  You can use either for your project.
+
+Contents:
+- bbb.h, bbb_init.c:  general definitions and initialization/deinit functions
+- bbb_adc.c:  A/D conversion functions
+- bbb_gpio.c:  GPIO input/output functions
+- bbb_pwm.c:  PWM management functions
+- bbb_i2c.c:  I2C management functions
+
+Test programs:
+- bbb_test_ADC.c:  Reads one A/D channel and prints results to screen
+- bbb_test_GPIO.c:  Toggles one GPIO pin for 10 seconds
+- bbb_test_PWM.c:  Configures and runs one PWM channel for 10 seconds
+- bbb_test_I2C.c:  (UPDATE WILL BE PROVIDED!)  Reads the Adafruit LSM9DS0 IMU

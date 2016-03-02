@@ -1,0 +1,58 @@
+Code Implemented
+=====================
+
+New LCM types for debugging -
+    -- State machine - lcm_state_t.lcm
+    -- PID - pid_state_t.lcm
+
+Data Logging - PID + State Machine
+
+Important Files -
+    Quadcopter_main.c :
+        - Common functions for PID reset, safety zone checks,etc.
+        - Keyboard Input Thread
+        - Waypoint Queue
+        - Print and Debugging
+        - Transmitter Spoofing
+
+    Processing_loop.c :
+        - State Machine Logic
+        - Handling Set Points
+
+        Command Handler:
+- Calls the auto-controller (PID)
+
+    Set_Dynamixel.c:
+    - Gripper Command Handler
+    - Set perched status flag
+
+    Videos
+    =======
+    Playlist -
+    http://bit.ly/1NGNpIv
+
+    Quadcopter - Manual Unperching
+
+    Quadrotor - Manual Flight with Auto Perch
+
+    Quadrotor - Waypoint Following (1st Run)
+
+    Quadrotor - Outer Loop Control, Hold Position (2nd Run)
+
+    Quadrotor - Outer Loop Control, Hold Position (1st Run)
+
+    State Machine - Autonomous Perching with Motors Off
+
+    State Machine - Final Version & Motors Off
+
+    PID Tuning - Day 2 Run 2
+
+    PID Tuning - Day 2 Run 1
+
+    Perch Testing - Successful Perch
+
+    Perch Testing - Unsuccessful Perch
+
+    Manual Perch
+
+    PID Tuning - First Successful Logic and Tuning

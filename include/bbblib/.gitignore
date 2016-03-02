@@ -1,0 +1,5 @@
+#ignore the .o files
+/obj/*.o
+/include/*.h~
+/src/*.c~
+/bin/*

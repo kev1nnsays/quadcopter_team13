@@ -1,0 +1,12 @@
+struct dynam_state_t
+{
+    int64_t utime;
+    float velocity;
+    float pose;
+
+    int8_t perch_signal;
+    int8_t command;
+
+    string flag;
+    string mode;
+}

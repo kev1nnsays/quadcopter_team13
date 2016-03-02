@@ -1,0 +1,13 @@
+w : add current pose as waypoint
+q : remove waypoint
+s : set the waypoint at the top of the queue as the current set point.
+p : print state - waypoints, pose, all flags, pid status
+r : reset all pids
+k : kill autocontol
+a : autocontrol
+
+
+
+
+TODO:
+1) IMU based pose generation. 

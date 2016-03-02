@@ -1,0 +1,4 @@
+struct waypoint_trigger_t
+{
+    int8_t trigger;
+}

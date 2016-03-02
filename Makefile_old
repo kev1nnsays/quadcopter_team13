@@ -1,0 +1,87 @@
+# Add your targets (i.e. the name of your output program) here
+#OBJS = px4flow handler_px4flow drivers handler_drivers handler_comms
+OBJS = geofence_driver geofence_handler comms_driver
+IDIR = 	include
+_DEPS = example.h px4flow_driver.h example_handler.h filter_util.h geofence_driver.h \
+	geofence_handler.h comms_handler.h util.h pixy_driver.h imu_driver.h kalman.h \
+        NAZA_Commands.h pixy_handler.h px4flow_handler.h imu_handler.h \
+	motion_capture_handler.h
+LCMTYPES = sonar_raw_t.o px4flow_t.o px4flow_basic_t.o px4flow_integral_t.o \
+	channels_t.o pixy_t.o pixy_frame_t.o imu_t.o cfg_data_frequency_t.o \
+        cfg_usb_serial_num_t.o led_t.o telemetry_t.o cfg_uart_baud_t.o kill_t.o \
+        rpms_t.o imu_data_t.o motion_capture_t.o
+BBBOBJS = bbb_init.o bbb_i2c.o
+
+CC = gcc
+CFLAGS = -g -Wall -std=gnu99 `pkg-config --cflags lcm`
+LDFLAGS = `pkg-config --libs lcm`
+
+OBJS := $(addprefix obj/,$(OBJS))
+DEPS := $(addprefix $(IDIR)/,$(_DEPS))
+LCMTYPES := $(addprefix include/lcmtypes/lcmtypes_c/,$(LCMTYPES))
+BBBOBJS := $(addprefix include/bbblib/,$(BBBOBJS))
+
+.PHONY: all clean io include/lcmtypes include/bbblib
+
+# Removed "io" - don't see any target for it - EMA
+all:  include/lcmtypes include/bbblib $(OBJS) 
+
+include/lcmtypes:
+	@$(MAKE) -C include/lcmtypes
+
+include/bbblib:
+	@$(MAKE) -C include/bbblib
+
+### Basic Make data
+
+%.o: %.c 
+	$(CC) $(CFLAGS) -c $^ -o $@
+
+blocks/io/%.o: io/%.c
+	$(CC) $(CFLAGS) -c $^ -I. -o $@
+
+include/lcmtypes/%.o: include/lcmtypes/%.c
+	$(CC) $(CFLAGS) -c $^ -o $@
+
+
+### Specific programs to build
+
+obj/comms_driver: blocks/comms_driver.o blocks/io/comms.o blocks/io/serial.o blocks/io/circular.o
+	$(CC) -o $@ $^ -Iio $(LDFLAGS) $(LCMTYPES)
+
+# Removed pixy and px4flow dependencies
+obj/geofence_driver: src/geofence_driver.o src/imu_driver.o src/util.o
+	$(CC) -o $@ $^ $(DEPS) $(LDFLAGS) $(LCMTYPES) $(BBBOBJS) -lm
+
+# Removed pixy and px4flow dependencies
+obj/geofence_handler: src/geofence_handler.o src/NAZA_Commands.o src/util.o src/imu_handler.o src/motion_capture_handler.o
+	$(CC) -o $@ $^ $(DEPS) $(LDFLAGS) $(LCMTYPES) -lm -lgsl -lgslcblas
+
+# Clean target
+
+clean:
+	@$(MAKE) -C include/lcmtypes clean
+	@$(MAKE) -C include/bbblib clean
+	rm -f *~ *.o obj/* src/*~ src/*.o include/*~ blocks/io/*.o blocks/*.o
+
+# The below targets are not used
+#
+#obj/px4flow: src/example.o src/PX4Flow.o src/util.o
+#	$(CC) -o $@ $^ $(DEPS) $(LDFLAGS) $(LCMTYPES) $(BBBOBJS) -lm
+#
+#obj/handler_px4flow: src/example_handler.o src/filter_util.o
+#	$(CC) -o $@ $^ $(DEPS) $(LDFLAGS) $(LCMTYPES) -lm
+#
+#obj/handler_comms: src/comms_handler.o src/filter_util.o
+#	$(CC) -o $@ $^ $(DEPS) $(LDFLAGS) $(LCMTYPES) -lm
+#
+#obj/drivers: src/drivers.o src/PX4Flow.o src/pixy.o src/imu.o src/util.o
+#	$(CC) -o $@ $^ $(DEPS) $(LDFLAGS) $(LCMTYPES) $(BBBOBJS) -lm
+#
+#obj/handler_drivers: src/drivers_handler.o src/NAZA_Commands.o src/filter_util.o src/kalman.o src/util.o
+#	$(CC) -o $@ $^ $(DEPS) $(LDFLAGS) $(LCMTYPES) -lm -lgsl -lgslcblas
+#
+#obj/fence: src/main.o src/altitude.o src/filter_util.o src/serial.o src/sonar.o $(LCMTYPES) $(DEPS)
+#	$(CC) -o $@ $^ $(LDFLAGS) -lm -I$(IDIR)
+
+

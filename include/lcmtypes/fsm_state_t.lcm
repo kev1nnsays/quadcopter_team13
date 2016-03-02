@@ -1,0 +1,14 @@
+struct fsm_state_t
+{
+    int64_t utime;
+    double time_since_reached;
+
+    boolean auto_state;
+    string state_name;
+
+    float setpoint[8];
+    float pose[8];
+
+    boolean stable;
+    boolean reached;
+}

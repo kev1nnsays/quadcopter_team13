@@ -1,0 +1,16 @@
+struct pid_status_t
+{
+  float iterm;
+  double prev_time;
+  int8_t reached_target;
+  int8_t first_time;
+  float error;
+  float x_ref;
+  float output;
+  float kp;
+  float kd;
+  float ki;
+  float error_dot;
+  float x_ref_dot;
+  int64_t utime;
+}

@@ -1,0 +1,24 @@
+start, 0.0, 0.0
+
+target point 1, 0.0, 1.0, 0.5
+target point 2, 0.0, 0.0, 0.5
+
+thrust_pid, -90.0,  0.0, -82.0
+thrust_trim, 1520
+thrust_isat, 80
+thrust_Outthresh, 120
+
+roll_pid, -150.0, 0.0, -175.0
+roll_trim, 1495
+roll_isat, 80
+roll_Outthresh, 120
+
+pitch_pid, 100.0, 0.0, 115.0
+pitch__trim, 1520
+pitch__isat, 80
+pitch__Outthresh, 150
+
+yaw_pid, 0.0, 0.0, 0.0
+yaw_trim, 1495
+yaw_isat, 20
+yaw_Outthresh, 30
